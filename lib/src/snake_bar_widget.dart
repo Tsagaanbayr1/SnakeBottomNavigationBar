@@ -98,10 +98,7 @@ class SnakeNavigationBar extends StatelessWidget {
     this.selectedLabelStyle,
     this.unselectedLabelStyle,
     required this.height,
-  })   : showSelectedLabels =
-            (snakeShape.type == SnakeShapeType.circle && showSelectedLabels)
-                ? false
-                : showSelectedLabels,
+  })  : showSelectedLabels = (snakeShape.type == SnakeShapeType.circle && showSelectedLabels) ? false : showSelectedLabels,
         super(key: key);
 
   factory SnakeNavigationBar.color({
@@ -195,17 +192,10 @@ class SnakeNavigationBar extends StatelessWidget {
   SnakeBottomBarThemeData _createTheme(BuildContext context) {
     final theme = BottomNavigationBarTheme.of(context);
     return SnakeBottomBarThemeData(
-      snakeGradient:
-          snakeViewGradient ?? Theme.of(context).accentColor.toGradient,
-      backgroundGradient: backgroundGradient ??
-          theme.backgroundColor?.toGradient ??
-          Theme.of(context).cardColor.toGradient,
-      selectedItemGradient: selectedItemGradient ??
-          theme.selectedItemColor?.toGradient ??
-          Theme.of(context).cardColor.toGradient,
-      unselectedItemGradient: unselectedItemGradient ??
-          theme.unselectedItemColor?.toGradient ??
-          Theme.of(context).accentColor.toGradient,
+      snakeGradient: snakeViewGradient ?? Theme.of(context).accentColor.toGradient,
+      backgroundGradient: backgroundGradient ?? theme.backgroundColor?.toGradient ?? Theme.of(context).cardColor.toGradient,
+      selectedItemGradient: selectedItemGradient ?? theme.selectedItemColor?.toGradient ?? Theme.of(context).cardColor.toGradient,
+      unselectedItemGradient: unselectedItemGradient ?? theme.unselectedItemColor?.toGradient ?? Theme.of(context).accentColor.toGradient,
       showSelectedLabels: showSelectedLabels,
       showUnselectedLabels: showUnselectedLabels,
       snakeShape: snakeShape,
@@ -271,7 +261,7 @@ class _SnakeNavigationBar extends StatelessWidget {
 
     return AnimatedPadding(
       padding: padding,
-      duration: kThemeChangeDuration,
+      duration: Duration(milliseconds: 100),
       child: Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -285,12 +275,14 @@ class _SnakeNavigationBar extends StatelessWidget {
               color: Colors.transparent,
               shape: shape,
               child: AnimatedContainer(
-                duration: kThemeChangeDuration,
+                duration: Duration(milliseconds: 100),
                 decoration: BoxDecoration(gradient: theme.backgroundGradient),
                 height: height,
                 child: Stack(
                   children: [
                     SnakeView(
+                      animationDuration: Duration(milliseconds: 50),
+                      delayTransition: Duration(milliseconds: 50),
                       itemsCount: items!.length,
                       height: height,
                       widgetEdgePadding: padding.left + padding.right,
@@ -305,7 +297,7 @@ class _SnakeNavigationBar extends StatelessWidget {
           AnimatedContainer(
             height: isPinned ? MediaQuery.of(context).padding.bottom : 0,
             decoration: BoxDecoration(gradient: theme.backgroundGradient),
-            duration: kThemeChangeDuration,
+            duration: Duration(milliseconds: 100),
           ),
         ],
       ),
